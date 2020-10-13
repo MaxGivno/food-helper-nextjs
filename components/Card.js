@@ -3,7 +3,11 @@ const Card = ({ meal }) => {
     <div className='section-card'>
       <div className='img-container'>
         <img
-          src={meal.strMealThumb ? meal.strMealThumb : meal.strCategoryThumb}
+          src={
+            meal.strMealThumb
+              ? `${meal.strMealThumb}/preview`
+              : meal.strCategoryThumb
+          }
           alt={meal.strMeal ? meal.strMeal : meal.strCategory}
           className={meal.strMeal ? 'thumb' : 'thumb-category'}
         />

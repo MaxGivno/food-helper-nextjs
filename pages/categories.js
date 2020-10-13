@@ -1,28 +1,28 @@
-import axios from 'axios';
+import axios from 'axios'
 
-import Layout from '../components/Layout';
-import PageSection from '../components/PageSection';
+import Layout from '../components/Layout'
+import PageSection from '../components/PageSection'
 
 const axiosWithBaseUrl = axios.create({
   baseURL: 'https://www.themealdb.com/api/json/v2/9973533',
   responseType: 'json',
-});
+})
 
-function Categories(props) {
+function Categories({ categories }) {
   return (
     <Layout>
-      <PageSection title={'Categories'} meals={props.categories} />
+      <PageSection title={'Categories'} meals={categories} />
     </Layout>
-  );
+  )
 }
 
 Categories.getInitialProps = async function () {
-  const latest = await axiosWithBaseUrl.get('/categories.php');
-  const categories = await latest.data.categories;
+  const latest = await axiosWithBaseUrl.get('/categories.php')
+  const categories = await latest.data.categories
 
   return {
     categories: categories,
-  };
-};
+  }
+}
 
-export default Categories;
+export default Categories

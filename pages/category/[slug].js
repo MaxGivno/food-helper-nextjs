@@ -1,34 +1,36 @@
-import { useRouter } from 'next/router'
-import axios from 'axios'
-import useSWR from 'swr'
+import { getCategories, getCategory } from '../../lib/themealdbapi'
 
 import Layout from '../../components/Layout'
 import PageSection from '../../components/PageSection'
-import Loading from '../../components/Loading'
-import Error from '../../components/Error'
 
-const axiosWithBaseUrl = axios.create({
-  baseURL: 'https://www.themealdb.com/api/json/v2/9973533',
-  responseType: 'json',
-})
-
-function Category() {
-  const router = useRouter()
-  const { slug } = router.query
-
-  const fetcher = (url) => axiosWithBaseUrl(url).then((r) => r.data.meals)
-
-  const { data, error } = useSWR(`/filter.php?c=${slug}`, fetcher)
-
-  if (error) return <Error />
-  if (!data) return <Loading />
-  const category = data
-
+function Category({ category }) {
   return (
     <Layout>
-      <PageSection title={slug} meals={category} />
+      <PageSection title={category.strCategory} meals={category} />
     </Layout>
   )
+}
+
+export async function getStaticPaths() {
+  const categories = await getCategories()
+  const paths = categories.map((cat) => ({
+    params: { slug: cat.strCategory },
+  }))
+
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const category = await getCategory(params.slug)
+
+  return {
+    props: {
+      category,
+    },
+  }
 }
 
 export default Category
