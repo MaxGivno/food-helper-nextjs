@@ -1,12 +1,15 @@
 import { getCategories, getCategory } from '../../lib/themealdbapi'
+import { useRouter } from 'next/router'
 
 import Layout from '../../components/Layout'
 import PageSection from '../../components/PageSection'
 
 function Category({ category }) {
+  const router = useRouter()
+  const { slug } = router.query
   return (
     <Layout>
-      <PageSection title={category.strCategory} meals={category} />
+      <PageSection title={slug} meals={category} />
     </Layout>
   )
 }
