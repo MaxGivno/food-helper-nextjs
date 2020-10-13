@@ -1,13 +1,8 @@
-import axios from 'axios'
+import { getLatest, getRandom } from '../lib/themealdbapi'
 
 import Layout from '../components/Layout'
 import Hero from '../components/Hero'
 import PageSection from '../components/PageSection'
-
-const axiosWithBaseUrl = axios.create({
-  baseURL: 'https://www.themealdb.com/api/json/v2/9973533',
-  responseType: 'json',
-})
 
 function Index({ latestMeals, randomMeals }) {
   return (
@@ -19,14 +14,15 @@ function Index({ latestMeals, randomMeals }) {
   )
 }
 
-Index.getInitialProps = async function () {
-  const latest = await axiosWithBaseUrl.get('/latest.php')
-  const random = await axiosWithBaseUrl.get('/randomselection.php')
-  const latestMeals = await latest.data.meals
-  const randomMeals = await random.data.meals
+export async function getStaticProps() {
+  const latestMeals = await getLatest()
+  const randomMeals = await getRandom()
+
   return {
-    latestMeals: latestMeals,
-    randomMeals: randomMeals,
+    props: {
+      latestMeals,
+      randomMeals,
+    },
   }
 }
 
