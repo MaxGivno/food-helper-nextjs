@@ -1,31 +1,32 @@
-import { useRouter } from 'next/router'
-import axios from 'axios'
+import { getMeal } from '../../lib/themealdbapi'
+// import { useRouter } from 'next/router'
+// import axios from 'axios'
 import Link from 'next/link'
-import useSWR from 'swr'
+// import useSWR from 'swr'
 
 import Layout from '../../components/Layout'
-import Loading from '../../components/Loading'
-import Error from '../../components/Error'
+// import Loading from '../../components/Loading'
+// import Error from '../../components/Error'
 import IngredientsList from '../../components/IngredientsList'
 import Directions from '../../components/Directions'
 import ForkedFrom from '../../components/ForkedFrom'
 
-const axiosWithBaseUrl = axios.create({
-  baseURL: 'https://www.themealdb.com/api/json/v2/9973533',
-  responseType: 'json',
-})
+// const axiosWithBaseUrl = axios.create({
+//   baseURL: 'https://www.themealdb.com/api/json/v2/9973533',
+//   responseType: 'json',
+// })
 
-function Recipe() {
-  const router = useRouter()
-  const { slug } = router.query
+function Recipe({ recipe }) {
+  // const router = useRouter()
+  // const { slug } = router.query
 
-  const fetcher = (url) => axiosWithBaseUrl(url).then((r) => r.data.meals[0])
+  // const fetcher = (url) => axiosWithBaseUrl(url).then((r) => r.data.meals[0])
 
-  const { data, error } = useSWR(`/lookup.php?i=${slug}`, fetcher)
+  // const { data, error } = useSWR(`/lookup.php?i=${slug}`, fetcher)
 
-  if (error) return <Error />
-  if (!data) return <Loading />
-  const recipe = data
+  // if (error) return <Error />
+  // if (!data) return <Loading />
+  // const recipe = data
 
   const ingredients = () => {
     let arr = Object.entries(recipe)
@@ -120,12 +121,11 @@ function Recipe() {
   )
 }
 
-// export async function getStaticPaths() {
-//   // Return a list of possible value for id
-// }
+export async function getServerSideProps({ query }) {
+  const { slug } = query
+  const recipe = await getMeal(slug)
 
-// export async function getStaticProps({ params }) {
-//   // Fetch necessary data for the blog post using params.id
-// }
+  return { props: { recipe } }
+}
 
 export default Recipe
