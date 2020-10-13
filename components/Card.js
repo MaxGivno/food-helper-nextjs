@@ -1,6 +1,6 @@
-const Card = React.forwardRef(({ meal, href }, ref) => {
+const Card = ({ meal }) => {
   return (
-    <a href={href} className='section-card' ref={ref}>
+    <div className='section-card'>
       <div className='img-container'>
         <img
           src={meal.strMealThumb ? meal.strMealThumb : meal.strCategoryThumb}
@@ -9,8 +9,8 @@ const Card = React.forwardRef(({ meal, href }, ref) => {
         />
       </div>
       <h3 className='my-3'>{meal.strMeal ? meal.strMeal : meal.strCategory}</h3>
-    </a>
-  );
-});
+    </div>
+  )
+}
 
-export default Card;
+export default Card

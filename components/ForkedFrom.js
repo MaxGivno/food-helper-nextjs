@@ -1,10 +1,9 @@
 function ForkedFrom({ source }) {
   return (
     <footer className='forked-from'>
-      <p className='my-2'>Forked from:</p>
-      {/* <h3>{source}</h3> */}
+      {/* <p className='my-2'>Forked from:</p> */}
       <a href={source} target='_blank' rel='noopener noreferrer'>
-        <h4 className='mb-3'>Original Recipe</h4>
+        <h4 className='my-3'>See original recipe</h4>
       </a>
     </footer>
   )

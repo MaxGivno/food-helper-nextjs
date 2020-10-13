@@ -32,9 +32,21 @@ $site-width: 80vw;
   font-size: 4rem;
   margin: 0;
   line-height: 1;
-  transform: rotate(-7deg);
+  transform: rotate(-9deg);
   padding: 0;
   margin-bottom: 10px;
+  position: relative;
+
+  span.logo-after {
+    position: absolute;
+    font-family: 'Noto Serif';
+    font-size: 1.35rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transform: rotate(9deg);
+    bottom: -16px;
+    right: 0px;
+  }
 }
 
 .navbar-light .navbar-brand {
@@ -335,6 +347,13 @@ hr {
   border-radius: 0 0 10px 10px;
   padding: 1px 25px;
   border-top: 4px solid rgb(236, 212, 212);
+}
+
+.centered-container {
+  display: grid;
+  place-content: center;
+  width: 100%;
+  height: calc(100vh - 90px);
 }
 
 @media screen and (max-width: 600px) {

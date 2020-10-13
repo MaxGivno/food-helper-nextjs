@@ -1,35 +1,37 @@
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import Link from 'next/link';
-import useSWR from 'swr';
+import { useRouter } from 'next/router'
+import axios from 'axios'
+import Link from 'next/link'
+import useSWR from 'swr'
 
-import Layout from '../../components/Layout';
-import IngredientsList from '../../components/IngredientsList';
-import Directions from '../../components/Directions';
-import ForkedFrom from '../../components/ForkedFrom';
+import Layout from '../../components/Layout'
+import Loading from '../../components/Loading'
+import Error from '../../components/Error'
+import IngredientsList from '../../components/IngredientsList'
+import Directions from '../../components/Directions'
+import ForkedFrom from '../../components/ForkedFrom'
 
 const axiosWithBaseUrl = axios.create({
   baseURL: 'https://www.themealdb.com/api/json/v2/9973533',
   responseType: 'json',
-});
+})
 
 function Recipe() {
-  const router = useRouter();
-  const { slug } = router.query;
+  const router = useRouter()
+  const { slug } = router.query
 
-  const fetcher = (url) => axiosWithBaseUrl(url).then((r) => r.data.meals[0]);
+  const fetcher = (url) => axiosWithBaseUrl(url).then((r) => r.data.meals[0])
 
-  const { data, error } = useSWR(`/lookup.php?i=${slug}`, fetcher);
+  const { data, error } = useSWR(`/lookup.php?i=${slug}`, fetcher)
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-  const recipe = data;
+  if (error) return <Error />
+  if (!data) return <Loading />
+  const recipe = data
 
   const ingredients = () => {
-    let arr = Object.entries(recipe);
-    let ingNames = arr.filter((item) => item[0].startsWith('strIngre'));
-    let ingMeasures = arr.filter((item) => item[0].startsWith('strMeasur'));
-    let list = [];
+    let arr = Object.entries(recipe)
+    let ingNames = arr.filter((item) => item[0].startsWith('strIngre'))
+    let ingMeasures = arr.filter((item) => item[0].startsWith('strMeasur'))
+    let list = []
     for (let i = 0; i < ingNames.length; i++) {
       if (ingNames[i][1]) {
         list.push(
@@ -47,25 +49,25 @@ function Recipe() {
               style={{ marginTop: '0rem' }}
             >{`${ingMeasures[i][1]} ${ingNames[i][1]}`}</span>
           </p>
-        );
+        )
       }
     }
-    return list;
-  };
+    return list
+  }
 
   // Parse directions from recipe
   const steps = () => {
-    const regex = /[\r\n]+/g;
+    const regex = /[\r\n]+/g
     let paragraphs = recipe.strInstructions
       .split(regex)
-      .filter((str) => !/^\d+$/.test(str));
-    paragraphs = paragraphs.map((str) => str.replace(/^\d+\.\s/g, ''));
+      .filter((str) => !/^\d+$/.test(str))
+    paragraphs = paragraphs.map((str) => str.replace(/^\d+\.\s/g, ''))
     return paragraphs.map((text, i) => (
       <li key={i}>
         <p>{text}</p>
       </li>
-    ));
-  };
+    ))
+  }
 
   const ytVideo = () => {
     if (recipe.strYoutube !== '') {
@@ -84,9 +86,9 @@ function Recipe() {
           ></i>
           &nbsp;&nbsp;Watch on YouTube
         </a>
-      );
+      )
     }
-  };
+  }
 
   return (
     <Layout>
@@ -96,10 +98,11 @@ function Recipe() {
           <div className='title-info'>
             <h1 className='my-4 font-weight-bold'>{recipe.strMeal}</h1>
             <div className='icons'>
-              {/* <StarRating rating={(Math.random() * (5 - 2) + 2).toFixed(1)} /> */}
-              <a href={`/category/${recipe.strCategory}`}>
-                <p className='tag'>{recipe.strCategory.toUpperCase()}</p>
-              </a>
+              <Link href={`/category/${recipe.strCategory}`}>
+                <a>
+                  <p className='tag'>{recipe.strCategory.toUpperCase()}</p>
+                </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -114,7 +117,7 @@ function Recipe() {
         {recipe.strSource !== '' && <ForkedFrom source={recipe.strSource} />}
       </div>
     </Layout>
-  );
+  )
 }
 
-export default Recipe;
+export default Recipe

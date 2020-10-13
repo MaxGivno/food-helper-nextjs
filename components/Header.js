@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 function Header(props) {
@@ -8,9 +9,12 @@ function Header(props) {
       style={{ backgroundColor: '#fbf3ea' }}
     >
       <div className='container p-0'>
-        <a className='navbar-brand logo' href='/'>
-          Cooking
-        </a>
+        <Link href='/'>
+          <a className='navbar-brand logo'>
+            Cooking
+            <span className='logo-after'>book</span>
+          </a>
+        </Link>
         <button
           className='navbar-toggler'
           type='button'
@@ -25,18 +29,18 @@ function Header(props) {
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul className='navbar-nav ml-auto'>
             <li className={`nav-item ${router.pathname === '/' && 'active'}`}>
-              <a className='nav-link' href='/'>
-                Home
-              </a>
+              <Link href='/'>
+                <a className='nav-link'>Home</a>
+              </Link>
             </li>
             <li
               className={`nav-item ${
                 router.pathname === '/categories' && 'active'
               }`}
             >
-              <a className='nav-link' href='/categories'>
-                Categories
-              </a>
+              <Link href='/categories'>
+                <a className='nav-link'>Categories</a>
+              </Link>
             </li>
           </ul>
         </div>

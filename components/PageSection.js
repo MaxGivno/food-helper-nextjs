@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import Card from './Card';
+import Link from 'next/link'
+import Card from './Card'
 
 function PageSection({ meals, title }) {
   const cards = meals.map((meal, i) => (
@@ -12,9 +12,11 @@ function PageSection({ meals, title }) {
       }
       passHref
     >
-      <Card meal={meal} />
+      <a>
+        <Card meal={meal} />
+      </a>
     </Link>
-  ));
+  ))
 
   return (
     <div className='section-container'>
@@ -25,7 +27,7 @@ function PageSection({ meals, title }) {
         <div className='cards-container'>{cards}</div>
       </div>
     </div>
-  );
+  )
 }
 
-export default PageSection;
+export default PageSection
