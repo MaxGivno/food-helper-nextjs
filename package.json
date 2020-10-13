@@ -1,7 +1,7 @@
 {
-  "name": "food-helper-2",
+  "name": "food-helper-nextjs",
   "version": "1.0.0",
-  "description": "Reiteration of food-helper with Node.js",
+  "description": "Reiteration of food-helper with Next.js",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
