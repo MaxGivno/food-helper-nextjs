@@ -1,12 +1,25 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useContext } from "react"
+import { useRouter } from "next/router"
+import { AppContext } from "./AppContext"
+
+import Link from "next/link"
 
 function Header(props) {
   const router = useRouter()
+  const { query, pathname } = router
+
+  const { searchText, handleInput, handleSubmit } = useContext(AppContext)
+
+  const handleSearchSubmit = (e) => {
+    handleSubmit(e)
+    if (pathname !== "/search") {
+      router.push("/search", undefined, { shallow: true })
+    }
+  }
   return (
     <nav
       className='navbar navbar-expand-sm navbar-light'
-      style={{ backgroundColor: '#fbf3ea' }}
+      style={{ backgroundColor: "#fbf3ea" }}
     >
       <div className='container p-0'>
         <Link href='/'>
@@ -27,15 +40,32 @@ function Header(props) {
           <span className='navbar-toggler-icon'></span>
         </button>
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
-          <ul className='navbar-nav ml-auto'>
-            <li className={`nav-item ${router.pathname === '/' && 'active'}`}>
+          <form
+            className='search__wrapper ml-sm-auto ml-0 my-sm-0 my-4'
+            onSubmit={handleSearchSubmit}
+          >
+            <input
+              type='text'
+              name='search'
+              placeholder='Search for...'
+              className='search__field'
+              value={searchText}
+              onChange={handleInput}
+            />
+            <button
+              type='submit'
+              className='fa fa-search search__icon'
+            ></button>
+          </form>
+          <ul className='navbar-nav ml-sm-3 ml-0'>
+            <li className={`nav-item ${router.pathname === "/" && "active"}`}>
               <Link href='/'>
                 <a className='nav-link'>Home</a>
               </Link>
             </li>
             <li
               className={`nav-item ${
-                router.pathname === '/categories' && 'active'
+                router.pathname === "/categories" && "active"
               }`}
             >
               <Link href='/categories'>
