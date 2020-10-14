@@ -5,7 +5,8 @@ const AppContext = createContext()
 
 const AppContextProvider = ({ children }) => {
   const [searchText, setSearchText] = useState("")
-  const [searchResults, setSearchResults] = useState(null)
+  const [searchResults, setSearchResults] = useState(undefined)
+  const [isSubmitted, setIsSubmitted] = useState(false)
   const validRegEx = /^[a-zA-Z]*$/g
 
   const getSearchResults = async () => {
@@ -18,20 +19,25 @@ const AppContextProvider = ({ children }) => {
     const string = e.target.value
     const validString = string.match(validRegEx)
     validString && setSearchText(validString)
+    setIsSubmitted(false)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (searchText && searchText !== "") {
+      searchResults && setSearchResults(undefined)
       getSearchResults()
+      setIsSubmitted(true)
     } else if (searchText === "") {
       clearSearchResults()
+      setIsSubmitted(false)
     }
   }
 
   const clearSearchResults = () => {
     setSearchText("")
-    setSearchResults(null)
+    setSearchResults(undefined)
+    setIsSubmitted(false)
   }
 
   return (
@@ -39,6 +45,7 @@ const AppContextProvider = ({ children }) => {
       value={{
         searchText,
         searchResults,
+        isSubmitted,
         handleInput,
         handleSubmit,
         clearSearchResults,
