@@ -1,37 +1,16 @@
-import { getMeal } from '../../lib/themealdbapi'
-import { useRouter } from 'next/router'
-import axios from 'axios'
-import Link from 'next/link'
-import useSWR from 'swr'
+import { getAllMeals, getMeal } from "../../lib/themealdbapi"
+import Link from "next/link"
 
-import Layout from '../../components/Layout'
-import Loading from '../../components/Loading'
-import Error from '../../components/Error'
-import IngredientsList from '../../components/IngredientsList'
-import Directions from '../../components/Directions'
-import ForkedFrom from '../../components/ForkedFrom'
+import Layout from "../../components/Layout"
+import IngredientsList from "../../components/IngredientsList"
+import Directions from "../../components/Directions"
+import ForkedFrom from "../../components/ForkedFrom"
 
-const axiosWithBaseUrl = axios.create({
-  baseURL: 'https://www.themealdb.com/api/json/v2/9973533',
-  responseType: 'json',
-})
-
-function Recipe() {
-  const router = useRouter()
-  const { slug } = router.query
-
-  const fetcher = (url) => axiosWithBaseUrl(url).then((r) => r.data.meals[0])
-
-  const { data, error } = useSWR(`/lookup.php?i=${slug}`, fetcher)
-
-  if (error) return <Error />
-  if (!data) return <Loading />
-  const recipe = data
-
+function Recipe({ recipe }) {
   const ingredients = () => {
     let arr = Object.entries(recipe)
-    let ingNames = arr.filter((item) => item[0].startsWith('strIngre'))
-    let ingMeasures = arr.filter((item) => item[0].startsWith('strMeasur'))
+    let ingNames = arr.filter((item) => item[0].startsWith("strIngre"))
+    let ingMeasures = arr.filter((item) => item[0].startsWith("strMeasur"))
     let list = []
     for (let i = 0; i < ingNames.length; i++) {
       if (ingNames[i][1]) {
@@ -40,14 +19,14 @@ function Recipe() {
             <img
               src={`https://www.themealdb.com/images/ingredients/${ingNames[i][1]}-Small.png`}
               style={{
-                height: '100px',
-                width: '100px',
-                objectFit: 'scale-down',
+                height: "100px",
+                width: "100px",
+                objectFit: "scale-down",
               }}
               alt={ingNames[i][1]}
             />
             <span
-              style={{ marginTop: '0rem' }}
+              style={{ marginTop: "0rem" }}
             >{`${ingMeasures[i][1]} ${ingNames[i][1]}`}</span>
           </p>
         )
@@ -62,7 +41,7 @@ function Recipe() {
     let paragraphs = recipe.strInstructions
       .split(regex)
       .filter((str) => !/^\d+$/.test(str))
-    paragraphs = paragraphs.map((str) => str.replace(/^\d+\.\s/g, ''))
+    paragraphs = paragraphs.map((str) => str.replace(/^\d+\.\s/g, ""))
     return paragraphs.map((text, i) => (
       <li key={i}>
         <p>{text}</p>
@@ -71,7 +50,7 @@ function Recipe() {
   }
 
   const ytVideo = () => {
-    if (recipe.strYoutube !== '') {
+    if (recipe.strYoutube !== "") {
       return (
         <a
           href={recipe.strYoutube}
@@ -82,7 +61,7 @@ function Recipe() {
           <i
             className='fab fa-youtube fa-3x'
             style={{
-              color: 'Tomato',
+              color: "Tomato",
             }}
           ></i>
           &nbsp;&nbsp;Watch on YouTube
@@ -115,17 +94,32 @@ function Recipe() {
             <Directions steps={steps()} />
           </div>
         </section>
-        {recipe.strSource !== '' && <ForkedFrom source={recipe.strSource} />}
+        {recipe.strSource !== "" && <ForkedFrom source={recipe.strSource} />}
       </div>
     </Layout>
   )
 }
 
-// export async function getServerSideProps({ query }) {
-//   const { slug } = query
-//   const recipe = await getMeal(slug)
+export async function getStaticPaths() {
+  const res = await getAllMeals()
+  const paths = res.map((meal) => ({
+    params: { slug: meal.idMeal },
+  }))
 
-//   return { props: { recipe } }
-// }
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const recipe = await getMeal(params.slug)
+
+  return {
+    props: {
+      recipe,
+    },
+  }
+}
 
 export default Recipe
