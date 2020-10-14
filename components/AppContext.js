@@ -9,6 +9,8 @@ const AppContextProvider = ({ children }) => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const validRegEx = /^[a-zA-Z]*$/g
 
+  const searchField = document.querySelector("#search")
+
   const getSearchResults = async () => {
     const result = await searchByName(searchText)
     setSearchResults(result)
@@ -25,6 +27,7 @@ const AppContextProvider = ({ children }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (searchText && searchText !== "") {
+      searchField.blur()
       searchResults && setSearchResults(undefined)
       getSearchResults()
       setIsSubmitted(true)
