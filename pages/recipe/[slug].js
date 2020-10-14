@@ -37,11 +37,13 @@ function Recipe({ recipe }) {
 
   // Parse directions from recipe
   const steps = () => {
-    const regex = /[\r\n]+/g
+    const regex = /\r\n/g
     let paragraphs = recipe.strInstructions
       .split(regex)
-      .filter((str) => !/^\d+$/.test(str))
-    paragraphs = paragraphs.map((str) => str.replace(/^\d+\.\s/g, ""))
+      .filter((str) => !/^\d+\.?$/.test(str))
+    paragraphs = paragraphs
+      .map((str) => str.replace(/^\d+\.\s/g, ""))
+      .filter((str) => str !== "")
     return paragraphs.map((text, i) => (
       <li key={i}>
         <p>{text}</p>
