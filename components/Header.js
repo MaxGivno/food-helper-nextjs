@@ -41,7 +41,7 @@ function Header(props) {
         </button>
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <form
-            className='search__wrapper ml-auto'
+            className='search__wrapper ml-sm-auto ml-0 my-sm-0 my-4'
             onSubmit={handleSearchSubmit}
           >
             <input
@@ -57,7 +57,7 @@ function Header(props) {
               className='fa fa-search search__icon'
             ></button>
           </form>
-          <ul className='navbar-nav ml-3'>
+          <ul className='navbar-nav ml-sm-3 ml-0'>
             <li className={`nav-item ${router.pathname === "/" && "active"}`}>
               <Link href='/'>
                 <a className='nav-link'>Home</a>
