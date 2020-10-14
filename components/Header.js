@@ -1,17 +1,25 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useContext } from "react"
+import { useRouter } from "next/router"
+import { AppContext } from "./AppContext"
+
+import Link from "next/link"
 
 function Header(props) {
   const router = useRouter()
+  const { query, pathname } = router
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    router.push(href)
+  const { searchText, handleInput, handleSubmit } = useContext(AppContext)
+
+  const handleSearchSubmit = (e) => {
+    handleSubmit(e)
+    if (pathname !== "/search") {
+      router.push("/search", undefined, { shallow: true })
+    }
   }
   return (
     <nav
       className='navbar navbar-expand-sm navbar-light'
-      style={{ backgroundColor: '#fbf3ea' }}
+      style={{ backgroundColor: "#fbf3ea" }}
     >
       <div className='container p-0'>
         <Link href='/'>
@@ -32,12 +40,17 @@ function Header(props) {
           <span className='navbar-toggler-icon'></span>
         </button>
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
-          <form className='search__wrapper ml-auto' onSubmit={handleSubmit}>
+          <form
+            className='search__wrapper ml-auto'
+            onSubmit={handleSearchSubmit}
+          >
             <input
               type='text'
               name='search'
               placeholder='Search for...'
               className='search__field'
+              value={searchText}
+              onChange={handleInput}
             />
             <button
               type='submit'
@@ -45,14 +58,14 @@ function Header(props) {
             ></button>
           </form>
           <ul className='navbar-nav ml-3'>
-            <li className={`nav-item ${router.pathname === '/' && 'active'}`}>
+            <li className={`nav-item ${router.pathname === "/" && "active"}`}>
               <Link href='/'>
                 <a className='nav-link'>Home</a>
               </Link>
             </li>
             <li
               className={`nav-item ${
-                router.pathname === '/categories' && 'active'
+                router.pathname === "/categories" && "active"
               }`}
             >
               <Link href='/categories'>
