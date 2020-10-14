@@ -3,10 +3,11 @@ import { AppContext } from "../components/AppContext"
 import Layout from "../components/Layout"
 import SearchResults from "../components/SearchResults"
 
-const Search = ({ searchString }) => {
+const Search = () => {
   const {
     searchText,
     searchResults,
+    isSubmitted,
     handleInput,
     handleSubmit,
     clearSearchResults,
@@ -17,7 +18,7 @@ const Search = ({ searchString }) => {
       <div className='container text-center mt-4'>
         <form
           id='search-form'
-          className='form-group d-flex justify-content-center align-content=center col-4 p-0 mx-auto'
+          className='form-group d-flex justify-content-center align-content=center p-0 mx-auto'
           onSubmit={handleSubmit}
         >
           <input
@@ -34,7 +35,11 @@ const Search = ({ searchString }) => {
           </button>
         </form>
       </div>
-      <SearchResults results={searchResults} />
+      <SearchResults
+        searchText={searchText}
+        searchResults={searchResults}
+        isSubmitted={isSubmitted}
+      />
     </Layout>
   )
 }
