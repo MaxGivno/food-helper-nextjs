@@ -1,46 +1,16 @@
-import { useState, useEffect } from "react"
+import { useContext } from "react"
+import { AppContext } from "../components/AppContext"
 import Layout from "../components/Layout"
 import SearchResults from "../components/SearchResults"
-import { searchByName } from "../lib/themealdbapi"
 
 const Search = ({ searchString }) => {
-  const [searchText, setSearchText] = useState("")
-  const [searchResults, setSearchResults] = useState(null)
-  const validRegEx = /^[a-zA-Z]*$/g
-
-  useEffect(() => {
-    searchString && setSearchText(searchString.match(validRegEx))
-    if (searchText && searchText !== "") {
-      getSearchResults()
-    }
-  }, [])
-
-  const getSearchResults = async () => {
-    const result = await searchByName(searchText)
-    setSearchResults(result)
-  }
-
-  const handleInput = (e) => {
-    e.preventDefault()
-    const string = e.target.value
-    const validString = string.match(validRegEx)
-    validString && setSearchText(validString)
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (searchText && searchText !== "") {
-      console.log(searchText)
-      getSearchResults()
-    } else if (searchText === "") {
-      clearSearchResults()
-    }
-  }
-
-  const clearSearchResults = () => {
-    setSearchText("")
-    setSearchResults(null)
-  }
+  const {
+    searchText,
+    searchResults,
+    handleInput,
+    handleSubmit,
+    clearSearchResults,
+  } = useContext(AppContext)
 
   return (
     <Layout>
