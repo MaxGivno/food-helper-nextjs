@@ -9,12 +9,12 @@ const SearchResults = ({ results }) => {
       </div>
     )
   const list = results.map((meal, i) => (
-    <Link href={`/recipe/${meal.idMeal}`}>
+    <Link key={i} href={`/recipe/${meal.idMeal}`}>
       <a>
-        <li key={i} className='list-group-item media'>
+        <li className='list-group-item media'>
           <img
             src={`${meal.strMealThumb}/preview`}
-            class='mr-3'
+            className='mr-3'
             alt={meal.strMeal}
             width='64'
             height='64'
