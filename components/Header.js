@@ -3,6 +3,11 @@ import { useRouter } from 'next/router'
 
 function Header(props) {
   const router = useRouter()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    router.push(href)
+  }
   return (
     <nav
       className='navbar navbar-expand-sm navbar-light'
@@ -27,7 +32,19 @@ function Header(props) {
           <span className='navbar-toggler-icon'></span>
         </button>
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
-          <ul className='navbar-nav ml-auto'>
+          <form className='search__wrapper ml-auto' onSubmit={handleSubmit}>
+            <input
+              type='text'
+              name='search'
+              placeholder='Search for...'
+              className='search__field'
+            />
+            <button
+              type='submit'
+              className='fa fa-search search__icon'
+            ></button>
+          </form>
+          <ul className='navbar-nav ml-3'>
             <li className={`nav-item ${router.pathname === '/' && 'active'}`}>
               <Link href='/'>
                 <a className='nav-link'>Home</a>
