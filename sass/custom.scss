@@ -303,6 +303,11 @@ hr {
     overflow: hidden;
     text-align: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    // Safari rounded corners flick fix
+    // https://gist.github.com/ayamflow/b602ab436ac9f05660d9c15190f4fd7b
+    // -webkit-mask-image: -webkit-radial-gradient(white, black);
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
 
     &:hover img {
       opacity: 0.7;
@@ -324,7 +329,7 @@ hr {
         object-fit: contain;
         opacity: 1;
         transition: $transition-duration all ease-in-out;
-        backface-visibility: hidden;
+        // backface-visibility: hidden;
 
         &.thumb {
           display: block;
