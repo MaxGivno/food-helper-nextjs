@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Damion&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Damion&display=swap');
 
 $light-beige: #fbf3ea;
 $med-beige: #f8e4d4;
@@ -18,17 +18,17 @@ $body-bg: $light-beige;
 $body-color: $turquoise;
 $link-color: $turquoise;
 
-$font-family-base: "Noto Serif";
+$font-family-base: 'Noto Serif';
 $font-size-base: 1rem;
 
-@import "node_modules/bootstrap/scss/bootstrap";
+@import 'node_modules/bootstrap/scss/bootstrap';
 
 $transition-duration: 0.15s;
 $site-width: 80vw;
 
 .navbar-brand {
-  font-family: "Damion";
-  font-family: "Damion", cursive;
+  font-family: 'Damion';
+  font-family: 'Damion', cursive;
   font-size: 4rem;
   margin: 0;
   line-height: 1;
@@ -39,7 +39,7 @@ $site-width: 80vw;
 
   span.logo-after {
     position: absolute;
-    font-family: "Noto Serif";
+    font-family: 'Noto Serif';
     font-size: 1.35rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -189,7 +189,7 @@ hr {
     perspective: 1000;
   }
 
-  &::-webkit-input-placeholder[style*="hidden"] {
+  &::-webkit-input-placeholder[style*='hidden'] {
     color: #83b0c1;
     font-size: 0.65em;
     font-weight: normal;
@@ -198,7 +198,7 @@ hr {
     visibility: visible !important;
   }
 
-  &:-moz-placeholder[style*="hidden"] {
+  &:-moz-placeholder[style*='hidden'] {
     color: #83b0c1;
     font-size: 0.65em;
     font-weight: normal;
@@ -207,7 +207,7 @@ hr {
     visibility: visible !important;
   }
 
-  &::-moz-placeholder[style*="hidden"] {
+  &::-moz-placeholder[style*='hidden'] {
     color: #83b0c1;
     font-size: 0.65em;
     font-weight: normal;
@@ -216,7 +216,7 @@ hr {
     visibility: visible !important;
   }
 
-  &:-ms-input-placeholder[style*="hidden"] {
+  &:-ms-input-placeholder[style*='hidden'] {
     color: #83b0c1;
     font-size: 0.65em;
     font-weight: normal;
@@ -249,7 +249,7 @@ hr {
   width: 100vw;
   height: 40vh;
   margin-bottom: 25px;
-  background-image: url("https://images.unsplash.com/photo-1545216560-68430ad77342?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1440&q=80");
+  background-image: url('https://images.unsplash.com/photo-1545216560-68430ad77342?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1440&q=80');
   background-size: cover;
   background-position: center;
 
@@ -403,7 +403,7 @@ hr {
         align-items: center;
 
         .tag {
-          font-family: "Poppins";
+          font-family: 'Poppins';
           font-size: 0.7rem;
           color: white;
           background: $turquoise;
@@ -536,9 +536,23 @@ hr {
     font-weight: bold;
     cursor: pointer;
     color: #fff;
-    background-color: lightgray;
+    background-color: rgba(0, 0, 0, 0.16);
     border: none;
     border-radius: 50%;
+  }
+
+  #search-clear:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: background-color 0.15s ease-in-out;
+  }
+
+  #search-clear:active {
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: background-color 0.15s ease-in-out;
+  }
+
+  #search-clear:focus {
+    outline: none;
   }
 }
 
