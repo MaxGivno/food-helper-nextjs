@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import Card from './Card'
+import Loading from './Loading'
+import Error from './Error'
 
-function PageSection({ meals, title }) {
+function PageSection({ meals, title, loading, error }) {
   const cards = meals.map((meal, i) => (
     <Link
       key={i}
@@ -24,7 +26,13 @@ function PageSection({ meals, title }) {
         <div className='section-header'>
           <h2 className='mb-4'>{title}</h2>
         </div>
-        <div className='cards-container'>{cards}</div>
+        {loading ? (
+          <Loading />
+        ) : error ? (
+          <Error error />
+        ) : (
+          <div className='cards-container'>{cards}</div>
+        )}
       </div>
     </div>
   )
