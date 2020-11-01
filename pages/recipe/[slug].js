@@ -1,16 +1,16 @@
-import { getAllMeals, getMeal } from "../../lib/themealdbapi"
-import Link from "next/link"
+import { getAllMeals, getMeal } from '../../lib/themealdbapi'
+import Link from 'next/link'
 
-import Layout from "../../components/Layout"
-import IngredientsList from "../../components/IngredientsList"
-import Directions from "../../components/Directions"
-import ForkedFrom from "../../components/ForkedFrom"
+import Layout from '../../components/Layout'
+import IngredientsList from '../../components/IngredientsList'
+import Directions from '../../components/Directions'
+import ForkedFrom from '../../components/ForkedFrom'
 
 function Recipe({ recipe }) {
   const ingredients = () => {
     let arr = Object.entries(recipe)
-    let ingNames = arr.filter((item) => item[0].startsWith("strIngre"))
-    let ingMeasures = arr.filter((item) => item[0].startsWith("strMeasur"))
+    let ingNames = arr.filter((item) => item[0].startsWith('strIngre'))
+    let ingMeasures = arr.filter((item) => item[0].startsWith('strMeasur'))
     let list = []
     for (let i = 0; i < ingNames.length; i++) {
       if (ingNames[i][1]) {
@@ -19,14 +19,14 @@ function Recipe({ recipe }) {
             <img
               src={`https://www.themealdb.com/images/ingredients/${ingNames[i][1]}-Small.png`}
               style={{
-                height: "100px",
-                width: "100px",
-                objectFit: "scale-down",
+                height: '100px',
+                width: '100px',
+                objectFit: 'scale-down',
               }}
               alt={ingNames[i][1]}
             />
             <span
-              style={{ marginTop: "0rem" }}
+              style={{ marginTop: '0rem' }}
             >{`${ingMeasures[i][1]} ${ingNames[i][1]}`}</span>
           </p>
         )
@@ -42,8 +42,8 @@ function Recipe({ recipe }) {
       .split(regex)
       .filter((str) => !/^\d+\.?$/.test(str))
     paragraphs = paragraphs
-      .map((str) => str.replace(/^\d+\.\s/g, ""))
-      .filter((str) => str !== "")
+      .map((str) => str.replace(/^\d+\.\s|^STEP\s\d+/g, ''))
+      .filter((str) => str !== '')
     return paragraphs.map((text, i) => (
       <li key={i}>
         <p>{text}</p>
@@ -52,7 +52,7 @@ function Recipe({ recipe }) {
   }
 
   const ytVideo = () => {
-    if (recipe.strYoutube !== "") {
+    if (recipe.strYoutube !== '') {
       return (
         <a
           href={recipe.strYoutube}
@@ -63,7 +63,7 @@ function Recipe({ recipe }) {
           <i
             className='fab fa-youtube fa-3x'
             style={{
-              color: "Tomato",
+              color: 'Tomato',
             }}
           ></i>
           &nbsp;&nbsp;Watch on YouTube
@@ -96,7 +96,7 @@ function Recipe({ recipe }) {
             <Directions steps={steps()} />
           </div>
         </section>
-        {recipe.strSource !== "" && <ForkedFrom source={recipe.strSource} />}
+        {recipe.strSource !== '' && <ForkedFrom source={recipe.strSource} />}
       </div>
     </Layout>
   )
