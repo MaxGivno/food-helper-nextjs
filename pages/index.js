@@ -14,7 +14,7 @@ function Index({ latestMeals, randomMeals }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   const latestMeals = await getLatest()
   const randomMeals = await getRandom()
 
@@ -25,5 +25,17 @@ export async function getStaticProps() {
     },
   }
 }
+
+// export async function getStaticProps() {
+//   const latestMeals = await getLatest()
+//   const randomMeals = await getRandom()
+
+//   return {
+//     props: {
+//       latestMeals,
+//       randomMeals,
+//     },
+//   }
+// }
 
 export default Index
